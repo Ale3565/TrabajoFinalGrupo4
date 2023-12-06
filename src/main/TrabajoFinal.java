@@ -7,9 +7,17 @@ public class TrabajoFinal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Obtener la cantidad de estudiantes
-        System.out.print("Ingrese la cantidad de estudiantes: ");
-        int cantidadEstudiantes = scanner.nextInt();
+        // Obtener la cantidad de estudiantes1
+        int cantidadEstudiantes;
+        do {
+            System.out.print("Ingrese la cantidad de estudiantes (debe ser un número positivo): ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("¡Error! Ingrese un número válido.");
+                scanner.next();
+            }
+            cantidadEstudiantes = scanner.nextInt();
+        } while (cantidadEstudiantes <= 0);
+
 
         // Arreglos para almacenar datos de estudiantes
         String[] nombres = new String[cantidadEstudiantes];
@@ -25,10 +33,10 @@ public class TrabajoFinal {
             scanner.nextLine(); // Limpiar el buffer del teclado
 
             System.out.print("Nombre: ");
-            nombres[i] = scanner.nextLine();
+            nombres[i] = formatoNombreApellido(scanner.nextLine());
 
             System.out.print("Apellido: ");
-            apellidos[i] = scanner.nextLine();
+            apellidos[i] = formatoNombreApellido(scanner.nextLine());
 
             System.out.print("Identificador único: ");
             identificadores[i] = scanner.nextLine();
@@ -100,4 +108,27 @@ public class TrabajoFinal {
         return sumaNotasPonderadas;
     }
 
+    // Método para convertir la primera letra a mayúscula y el resto a minúscula
+    public static String formatoNombreApellido(String input) {
+        if (input.isEmpty()) {
+            return input;
+        }
+
+        // Dividir la entrada en palabras separadas por espacios
+        String[] palabras = input.trim().split("\\s+");
+
+        StringBuilder resultado = new StringBuilder();
+
+        for (String palabra : palabras) {
+            if (!palabra.isEmpty()) {
+                String primeraLetra = palabra.substring(0, 1).toUpperCase();
+                String restoPalabra = palabra.substring(1).toLowerCase();
+
+                resultado.append(primeraLetra).append(restoPalabra).append(" ");
+            }
+        }
+
+        return resultado.toString().trim();
+    }
 }
+
